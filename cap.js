@@ -9,25 +9,25 @@ initializeApp({
   });
 const db=getFirestore();
 api.get("/",function(req,res){
-    res.sendFile(__dirname+"/singup.html")
+    res.sendFile(__dirname+"/singup.html");
 })
 api.get("/loginpage",(req,res)=>{
   const name=req.query.name;
-  const email=req.query.email;
+  const email=req.query.email; 
   const phone=req.query.phone;
   db.collection('use')
   .where("email","==",email)
-  .where("name","==",name)
+  .where("phone","==",phone)
   .get()
   .then((docs)=>{
     if(docs.size>0){
       res.sendFile(__dirname+"/dashboard.html");
     }
     else{
-      res.sendFile(__dirname+"/dashboard.html");
+      res.send("login failed");
     }
-  })
-})
+  });
+});
 api.get("/signup",function(req,res){
     db.collection('use').add({
         names:req.query.name,
@@ -38,7 +38,8 @@ api.get("/signup",function(req,res){
       res.sendFile(__dirname+"/login.html")
     })
 })
-api.listen(3002)
+api.listen(3001)
 
 
 
+ 
